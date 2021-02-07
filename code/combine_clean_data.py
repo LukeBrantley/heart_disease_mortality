@@ -2,7 +2,7 @@ import pandas as pd
 import os
 from pathlib import Path
 
-def read_clean_data()
+def read_clean_data():
     curr_filepath = os.path.split(__file__)[0]
     data_filepath = Path(curr_filepath).parents[0] / 'data/Heart_Disease_Mortality_Data_Among_US_Adults__35___by_State_Territory_and_County___2016-2018.csv'
 
