@@ -20,9 +20,14 @@ def read_clean_data():
         'Stratification1', 'Stratification2', 'TopicID', 'LocationID', 'Y_lat',
         'X_lon']]
 
-    redux.rename({'LocationAbbr':'state', 'LocationDesc':'county',  
-        'Stratification1':'gender', 'Stratification2':'race'}, inplace=True)
+    redux.rename(columns={'LocationAbbr':'state', 'LocationDesc':'county',  
+        'Data_Value':'mortality_rt', 'Stratification1':'gender', 
+        'Stratification2':'race'}, inplace=True)
 
-    redux['y'] = redux.Data_Value / 100000
+    redux['y'] = redux.mortality_rt / 100000
 
     return redux
+
+if __name__ == '__main__':
+    clean_data = read_clean_data()
+    clean_data.to_csv(os.path.split(__file__)[0] + '\clean_data.csv')
