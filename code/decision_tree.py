@@ -1,4 +1,9 @@
-## Steps
+''' 
+This script calculates Attribute Selection Measures for data set.
+I am not going to go into the recursion to build a full tree, but
+will expand upon this using the quick functions in scikit-learn.
+
+Steps
 ### 1. split x and y data to train and test sets
 ### 2. calculate and compare Attribute Selection Measures (ASM) of using each x-var as next node in tree
 #### a. This includes information gain (IG), Gini Index, and Gain Ratio
@@ -10,13 +15,14 @@
 ###### *. High Gini = high homogeneity = more likely to use as next node
 ###### **. Gini for all branches of all remaining attributes = (p^2 + (1-p)^2)
 ###### ***. Weight each branch's Gini by probability of occurence (ratio: # X=a / (# X=a + # X=b))
-
+'''
 ## For regression, y_pred = avg of y_obs w/in leaf node
 ## For classification, y_pred = max occurring y_obs in node?
 # scaling unnecessary
 import pandas as pd
 import numpy as np
 import os
+from pathlib import Path
 
 def gini_idx(target_col, y):
     # Gini for all branches of all remaining attributes = (p^2 + (1-p)^2)
@@ -154,7 +160,8 @@ def get_ASM(target_col, y, type='ig', max_tries=100):
 if __name__ == '__main__':
 
     # read in data and prep for tree
-    data = pd.read_csv(os.path.split(__file__)[0] + '\clean_data.csv')
+    data = pd.read_csv(str(Path(os.path.split(__file__)[0]).parents[0] / 
+        'data/') + '/mortality_rt_data.csv')
     data.dropna(subset=['mortality_rt'], inplace=True)
     data = data[(data.state!='Overall') & (data.gender!='Overall') &
                 (data.race!='Overall')]
